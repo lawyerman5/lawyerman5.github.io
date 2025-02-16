@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact Us - Fahim's Fitness</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Additional styles specific to the Contact page */
+    
+    /* Top Banner Section */
+    .contact-banner {
+      position: relative;
+      background: url('contact-banner.jpg') center/cover no-repeat;
+      height: 50vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+    }
+    .contact-banner h1 {
+      font-size: 3rem;
+    }
+    
+    /* Contact Form Section */
+    .contact-form-container {
+      background: #fff;
+      padding: 20px;
+      max-width: 600px;
+      margin: -50px auto 20px auto; /* overlap the banner */
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      border-radius: 5px;
+    }
+    .contact-form-container form {
+      display: flex;
+      flex-direction: column;
+    }
+    .contact-form-container label {
+      margin-top: 10px;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .contact-form-container input,
+    .contact-form-container textarea {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      font-size: 1rem;
+    }
+    .contact-form-container input:focus,
+    .contact-form-container textarea:focus {
+      outline: none;
+      border-color: #007BFF;
+    }
+    .contact-form-container button {
+      margin-top: 15px;
+      padding: 12px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .contact-form-container button:hover {
+      background-color: #0056b3;
+    }
+    
+    /* Google Map Section */
+    .map-container {
+      position: relative;
+      max-width: 1100px;
+      margin: 20px auto;
+      height: 400px;
+    }
+    .map-container iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      border-radius: 5px;
+    }
+    /* Map Banner Link */
+    .map-link {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: rgba(255, 0, 0, 0.8);
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 3px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header (consistent with other pages) -->
+  <header>
+    <div class="container">
+      <h1>Fahim's Fitness</h1>
+    </div>
+  </header>
+  
+  <!-- Navigation -->
+  <nav>
+    <div class="container">
+      <a href="index.html">Home</a>
+      <a href="whyus.html">Why Us?</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact Us</a>
+    </div>
+  </nav>
+  
+  <!-- Top Banner with Contact Title -->
+  <section class="contact-banner">
+    <h1>Contact Us</h1>
+  </section>
+  
+  <!-- Contact Form Section -->
+  <section class="contact-form-container container">
+    <!-- The form submits via AJAX to a service like Formspree. Replace 'yourFormID' with your actual endpoint. -->
+    <form id="contactForm" action="https://formspree.io/f/xkgoqgbp" method="POST">
+      <label for="name">Name *</label>
+      <input type="text" id="name" name="name" required>
+      
+      <label for="email">Email *</label>
+      <input type="email" id="email" name="_replyto" required>
+      
+      <label for="phone">Phone Number *</label>
+      <input type="tel" id="phone" name="phone" required>
+      
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="5"></textarea>
+      
+      <!-- Optional: set a subject -->
+      <input type="hidden" name="_subject" value="New Contact Form Submission">
+      
+      <button type="submit">Submit</button>
+    </form>
+  </section>
+  
+  <!-- Google Maps Section -->
+  <section class="map-container container">
+    <a class="map-link" href="https://www.google.com/maps/place/312+Bancroft+Road,+London+E1+4BU" target="_blank">View on Google Maps</a>
+    <iframe 
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1982.9878028637816!2d-0.05931038476935253!3d51.524197399999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48761cb60b5ac05b%3A0xa70ac05f06a9a03c!2s312%20Bancroft%20Rd%2C%20London%20E1%204BU%2C%20UK!5e0!3m2!1sen!2suk!4v1619123456789" 
+      allowfullscreen="" loading="lazy">
+    </iframe>
+  </section>
+  
+  <!-- Footer (consistent with other pages) -->
+  <footer>
+    <div class="container">
+      <nav>
+        <a href="team.html">Meet the Team</a> |
+        <a href="contact.html">Contact Us</a> |
+        <a href="privacy.html">Privacy Policy</a>
+      </nav>
+      <p>Fahim's Fitness</p>
+      <p>312 Bancroft Road, E1 4BU</p>
+      <p>Phone: +44 20 1234 5678</p>
+      <p>&copy; 2025 Fahim's Fitness. All rights reserved.</p>
+    </div>
+  </footer>
+  
+  <!-- AJAX Form Submission Script -->
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault(); // prevent the default form submission
+      
+      var formData = new FormData(this);
+      
+      fetch(this.action, {
+        method: this.method,
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      }).then(response => {
+        if (response.ok) {
+          alert("Thank you for your submission!");
+          this.reset();
+        } else {
+          response.json().then(data => {
+            if (data.hasOwnProperty("errors")) {
+              alert(data["errors"].map(error => error["message"]).join(", "));
+            } else {
+              alert("Oops! There was a problem submitting your form");
+            }
+          });
+        }
+      }).catch(error => {
+        alert("Oops! There was a problem submitting your form");
+      });
+    });
+  </script>
+</body>
+</html>
