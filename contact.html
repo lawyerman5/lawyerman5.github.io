@@ -5,7 +5,6 @@
   <title>Contact Us - Fahim's Fitness</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-
 </head>
 <body>
   <!-- Header (consistent with other pages) -->
@@ -25,15 +24,20 @@
       <a href="blog.html">Blog</a>
     </div>
   </nav>
-  
-  <!-- Top Banner with Contact Title -->
-  <section class="contact-banner">
+
+  <!-- Sign-up Banner Section -->
+  <section class="signup-banner">
+    <p>Sign up for a free home workout plan and regular fitness tips!</p>
+    <button id="signupBtn">Sign Up</button>
+  </section>
+
+   <!-- Top Banner with Contact Title -->
+   <section class="contact-banner">
     <h1>Have a question? Get in touch below</h1>
   </section>
-  
+
   <!-- Contact Form Section -->
   <section class="contact-form-container container">
-    <!-- The form submits via AJAX to a service like Formspree. Replace 'yourFormID' with your actual endpoint. -->
     <form id="contactForm" action="https://formspree.io/f/xkgoqgbp" method="POST">
       <label for="name">Name *</label>
       <input type="text" id="name" name="name" required>
@@ -42,18 +46,17 @@
       <input type="email" id="email" name="_replyto" required>
       
       <label for="phone">Phone Number *</label>
-      <input type="tel" id="phone" name="phone" required>
+      <input type="tel" id="phone" name="phone" pattern="^\+?[0-9]{1,4}?[0-9]{7,14}$" required>      
       
       <label for="message">Message</label>
       <textarea id="message" name="message" rows="5"></textarea>
       
-      <!-- Optional: set a subject -->
       <input type="hidden" name="_subject" value="New Contact Form Submission">
       
       <button type="submit">Submit</button>
     </form>
   </section>
-  
+
   <!-- Google Maps Section -->
   <section class="map-container container">
     <a class="map-link" href="https://www.google.com/maps/place/312+Bancroft+Road,+London+E1+4BU" target="_blank">View on Google Maps</a>
@@ -67,7 +70,7 @@
   <footer>
     <div class="container">
       <nav>
-        <a href="team.html">Meet the Team</a> |
+        <a href="whyus.html">Meet the Team</a> |
         <a href="contact.html">Contact Us</a> |
         <a href="privacy.html">Privacy Policy</a>
       </nav>
@@ -78,13 +81,55 @@
     </div>
   </footer>
   
+  <!-- Modal for Newsletter Signup -->
+  <div id="newsletterModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Sign Up for Our Newsletter</h2>
+      <form id="newsletterForm">
+        <input type="email" id="newsletterEmail" placeholder="Enter your email" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
+
   <!-- AJAX Form Submission Script -->
   <script>
+    // Modal for Newsletter
+    var modal = document.getElementById("newsletterModal");
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the "Sign Up" button is clicked, show the modal
+    document.getElementById('signupBtn').addEventListener('click', function() {
+      modal.style.display = "block";
+    });
+
+    // Close modal when user clicks on (x)
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    // Close modal if user clicks anywhere outside of the modal
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+
+    // Handle newsletter form submission
+    document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+      e.preventDefault(); // prevent the default form submission
+      var email = document.getElementById('newsletterEmail').value;
+      alert("Thank you for subscribing with email: " + email);
+      modal.style.display = "none"; // Close modal after submission
+    });
+    
+    // Form submission handling for contact form (same as before)
     document.getElementById('contactForm').addEventListener('submit', function(e) {
       e.preventDefault(); // prevent the default form submission
-      
+
       var formData = new FormData(this);
-      
+
       fetch(this.action, {
         method: this.method,
         body: formData,
